@@ -6,6 +6,7 @@ const stats = [
   { label: "Voice Presets", value: 20, suffix: "+" },
   { label: "Languages", value: 5, suffix: "" },
   { label: "API Cost", value: 0, suffix: "$", prefix: true },
+  { label: "Noise Reduction", value: 100, suffix: "%" },
 ];
 
 export function HeroSection() {
@@ -54,9 +55,9 @@ export function HeroSection() {
 
           {/* Subheadline */}
           <p className="mb-10 max-w-xl text-lg leading-relaxed text-text-secondary">
-            Professional voice synthesis, video transcription, and short-form
-            content generation — running entirely on your machine. Zero API
-            costs, zero data leaving your computer.
+            Professional voice synthesis, voice cleaning, and audiobook
+            narration — running entirely on your machine. Zero API costs,
+            zero data leaving your computer.
           </p>
 
           {/* CTAs */}

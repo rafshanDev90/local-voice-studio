@@ -26,6 +26,11 @@ const stack = [
     desc: "Media processing",
     detail: "Audio/video conversion",
   },
+  {
+    name: "noisereduce",
+    desc: "Noise reduction",
+    detail: "Spectral gating algorithm",
+  },
 ];
 
 export function TechStack() {

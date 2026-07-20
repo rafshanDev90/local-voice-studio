@@ -30,17 +30,17 @@ const products = [
     ),
   },
   {
-    id: "video",
-    title: "Video Summarizer",
+    id: "cleaner",
+    title: "Voice Cleaner",
     description:
-      "Transcribe and summarize YouTube videos or local files. Get concise summaries in your preferred language.",
-    href: "/app/video-summarizer",
-    status: "soon" as const,
+      "Remove background noise from voice recordings using AI-powered spectral gating. Clean audio in seconds.",
+    href: "/app/voice-cleaner",
+    status: "ready" as const,
     features: [
-      "YouTube transcription",
-      "Local file support",
-      "Multi-language summaries",
-      "Chapter detection",
+      "AI noise reduction",
+      "Multiple format support",
+      "Adjustable intensity",
+      "Instant processing",
     ],
     icon: (
       <svg
@@ -50,7 +50,7 @@ const products = [
         strokeWidth="1.5"
         className="h-6 w-6"
       >
-        <path d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" />
+        <path d="M19.114 5.636a9 9 0 0 1 0 12.728M16.463 8.288a5.25 5.25 0 0 1 0 7.424M6.75 8.25l4.72-4.72a.75.75 0 0 1 1.28.53v15.88a.75.75 0 0 1-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.009 9.009 0 0 1 2.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75Z" />
       </svg>
     ),
   },

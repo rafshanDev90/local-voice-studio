@@ -67,9 +67,9 @@ const features = [
     ),
   },
   {
-    title: "Smart Prosody",
+    title: "AI Noise Reduction",
     description:
-      "AI-powered punctuation and emphasis detection for natural-sounding speech.",
+      "Clean background noise from voice recordings with adjustable intensity. No cloud processing needed.",
     icon: (
       <svg
         viewBox="0 0 24 24"
@@ -78,7 +78,7 @@ const features = [
         strokeWidth="1.5"
         className="h-6 w-6"
       >
-        <path d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75Z" />
+        <path d="M17.25 9.75 19.5 12m0 0 2.25 2.25M19.5 12l2.25-2.25M19.5 12l-2.25 2.25m-10.5-6 4.72-4.72a.75.75 0 0 1 1.28.53v15.88a.75.75 0 0 1-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.009 9.009 0 0 1 2.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75Z" />
       </svg>
     ),
   },
@@ -122,7 +122,7 @@ export function FeaturesGrid() {
 
         {/* Grid */}
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {features.map((feature, i) => (
+          {features.map((feature) => (
             <div
               key={feature.title}
               className="group rounded-xl border border-border/50 bg-white p-6 transition-all hover:shadow-md hover:-translate-y-0.5"

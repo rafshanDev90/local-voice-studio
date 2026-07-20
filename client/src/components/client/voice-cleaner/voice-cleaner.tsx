@@ -28,6 +28,12 @@ const FORMAT_OPTIONS = [
   { value: "flac", label: "FLAC" },
 ] as const;
 
+function getIntensityLabel(value: number): string {
+  if (value < 0.4) return "Mild";
+  if (value < 0.7) return "Moderate";
+  return "Aggressive";
+}
+
 export function VoiceCleaner({ credits }: { credits: number }) {
   const [file, setFile] = useState<File | null>(null);
   const [isDragging, setIsDragging] = useState(false);
@@ -35,6 +41,7 @@ export function VoiceCleaner({ credits }: { credits: number }) {
   const [cleanedAudioUrl, setCleanedAudioUrl] = useState<string | null>(null);
   const [cleanedBlob, setCleanedBlob] = useState<Blob | null>(null);
   const [outputFormat, setOutputFormat] = useState("wav");
+  const [propDecrease, setPropDecrease] = useState(0.8);
   const audioUrlRef = useRef<string | null>(null);
 
   const handleFileSelect = useCallback(
@@ -73,6 +80,7 @@ export function VoiceCleaner({ credits }: { credits: number }) {
       const result = await cleanVoice({
         file,
         outputFormat,
+        propDecrease,
       });
 
       audioUrlRef.current = result.audioUrl;
@@ -87,7 +95,7 @@ export function VoiceCleaner({ credits }: { credits: number }) {
     } finally {
       setIsLoading(false);
     }
-  }, [file, outputFormat]);
+  }, [file, outputFormat, propDecrease]);
 
   const handleDownload = useCallback(() => {
     if (!cleanedBlob) return;
@@ -114,7 +122,24 @@ export function VoiceCleaner({ credits }: { credits: number }) {
 
   return (
     <div className="flex flex-1 flex-col justify-between px-4">
-      <div className="flex flex-1 flex-col gap-4 py-8">
+      <div className="flex flex-1 flex-col gap-6 py-8">
+        {/* Hero header */}
+        <div className="mx-auto max-w-xl text-center">
+          <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-brand-emerald/10 px-3 py-1">
+            <span className="h-1.5 w-1.5 rounded-full bg-brand-emerald animate-pulse" />
+            <span className="text-xs font-medium text-brand-emerald">
+              AI-Powered
+            </span>
+          </div>
+          <h1 className="mb-3 text-2xl font-bold text-text-primary">
+            Voice Cleaner
+          </h1>
+          <p className="text-sm text-text-secondary">
+            Remove background noise from your voice recordings.
+            Upload an audio file and get a clean version in seconds.
+          </p>
+        </div>
+
         {/* Upload zone */}
         <div
           className={`w-full max-w-xl mx-auto rounded-2xl border-2 border-dotted p-8 transition-all duration-200 ${
@@ -203,6 +228,29 @@ export function VoiceCleaner({ credits }: { credits: number }) {
               {fmt.label}
             </button>
           ))}
+        </div>
+
+        {/* Noise reduction slider */}
+        <div className="mx-auto w-full max-w-xl">
+          <div className="flex items-center justify-between mb-2">
+            <span className="text-sm text-gray-500">Noise Reduction</span>
+            <span className="text-sm font-medium text-gray-700">
+              {getIntensityLabel(propDecrease)} ({Math.round(propDecrease * 100)}%)
+            </span>
+          </div>
+          <input
+            type="range"
+            min="0.1"
+            max="1.0"
+            step="0.1"
+            value={propDecrease}
+            onChange={(e) => setPropDecrease(parseFloat(e.target.value))}
+            className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-gray-900"
+          />
+          <div className="flex justify-between text-xs text-gray-400 mt-1">
+            <span>Mild</span>
+            <span>Aggressive</span>
+          </div>
         </div>
 
         {/* Loading state */}
