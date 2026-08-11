@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-MODELS_DIR="server/models"
+MODELS_DIR="server/models/kokoro"
 BASE_URL="https://github.com/thewh1teagle/kokoro-onnx/releases/download/model-files"
 
 mkdir -p "$MODELS_DIR"
