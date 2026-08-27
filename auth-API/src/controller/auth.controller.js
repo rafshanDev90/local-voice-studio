@@ -3,9 +3,7 @@ import sessionModel from '../models/session.model.js';
 
 import crypto from 'crypto';
 import jwt from 'jsonwebtoken';
-import dotenv from 'dotenv';
-
-dotenv.config();
+import config from '../config/config.js';
 
 
 export async function register(req, res){
@@ -34,13 +32,13 @@ export async function register(req, res){
         id: user._id,
         username: user.username,
         email: user.email
-    }, process.env.JWT_SECRET, {expiresIn: '1h'});
+    }, config.jwtSecret, {expiresIn: '1h'});
     
     const refreshToken = jwt.sign({
         id: user._id,
         username: user.username,
         email: user.email
-    }, process.env.JWT_SECRET, {expiresIn: '7d'});
+    }, config.jwtSecret, {expiresIn: '7d'});
     
     const refreshTokenhash = crypto.randomBytes(64).toString('hex');
     const session = await sessionModel.create({
@@ -72,7 +70,7 @@ export async function getMe(req, res){
         return res.status(401).json({message: 'No token provided'});
     }
 
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const decoded = jwt.verify(token, config.jwtSecret);
     //console.log(decoded);
 
     const user = await userModel.findById(decoded.id);
@@ -94,14 +92,14 @@ export async function refreshToken(req, res){
         return res.status(401).json({message: 'No refresh token provided'});
     }
 
-    const decoded = jwt.verify(refreshToken, process.env.JWT_SECRET);
+    const decoded = jwt.verify(refreshToken, config.jwtSecret);
     const accessToken = jwt.sign({
         id: decoded.id,
-    }, process.env.JWT_SECRET, {expiresIn: '1h'});
+    }, config.jwtSecret, {expiresIn: '1h'});
     
     const newRefreshToken = jwt.sign({
         id: decoded.id,
-    }, process.env.JWT_SECRET, {expiresIn: '7d'});
+    }, config.jwtSecret, {expiresIn: '7d'});
 
     res.cookie('refreshToken', newRefreshToken, {
         httpOnly: true,
