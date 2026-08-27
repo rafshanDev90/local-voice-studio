@@ -192,7 +192,7 @@ async def generate_edge_tts(
 
 
 class TTSEngine:
-    def __init__(self, model_path: str = "server/models/kokoro/kokoro-v0_19.onnx", voices_path: str = "server/models/kokoro/voices.bin"):
+    def __init__(self, model_path: str = "server/model_weights/kokoro-v0_19.onnx", voices_path: str = "server/model_weights/voices.bin"):
         try:
             self.kokoro = Kokoro(model_path, voices_path)
         except Exception as e:

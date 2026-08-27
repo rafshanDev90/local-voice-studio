@@ -1,6 +1,8 @@
 import userModel from '../models/user.model.js';
 import sessionModel from '../models/session.model.js';
 
+import sessionModel from '../models/session.model.js';
+
 import crypto from 'crypto';
 import jwt from 'jsonwebtoken';
 import dotenv, { config } from 'dotenv';
@@ -23,10 +25,12 @@ export async function register(req, res){
     const hashedPassword = crypto.createHash('sha256').update(password).digest('hex');
 
     const user = await userModel.create({
+    const user = await userModel.create({
         username: username,
         email: email,
         password: hashedPassword
     });
+    //res.status(201).json({message: 'User created successfully', user: user});
     //res.status(201).json({message: 'User created successfully', user: user});
 
     const refreshtoken = jwt.sign({
