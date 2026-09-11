@@ -1,5 +1,5 @@
-import userModel from '../models/user.model.js';
 import sessionModel from '../models/session.model.js';
+import * as authService from '../services/auth.services.js';
 
 import crypto from 'crypto';
 import jwt from 'jsonwebtoken';
@@ -7,8 +7,7 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-
-export async function register(req, res){
+/*export async function register(req, res){
     const {username, email, password} = req.body;
 
     const alreadyExists = await userModel.findOne({
@@ -70,6 +69,42 @@ export async function register(req, res){
         },
         accessToken
     })
+}
+*/
+
+export async function register(req , res){
+    const { username, email, password } = req.body;
+    const ip = req.ip;
+    const userAgent = req.headers['user-agent'];
+
+    if (!username || !email || !password) {
+        return res.status(400).json({ message: 'Username, email and password are required' });
+    }
+    
+    try {
+        const { user, accessToken, refreshToken } = await authService.register({
+            username, email, password, ip, userAgent
+        })
+
+         res.cookie('refreshToken', refreshToken, {
+            httpOnly: true,
+            secure: true,
+            sameSite: 'strict',
+            maxAge: 7 * 24 * 60 * 60 * 1000 
+        });
+
+        return res.status(201).json({
+            message: 'User created successfully',
+            user: { username: user.username, email: user.email },
+            accessToken
+        });
+
+    }catch (error){
+            if (error.message === 'USER_EXISTS') {
+            return res.status(409).json({ message: 'Username or email already exists' });
+        }
+        return res.status(500).json({ message: 'Internal server error' });
+    }
 }
 
 export async function getMe(req, res){
